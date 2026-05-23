@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>あなたに向いているAIエージェント診断</title>
+  <style>
+    :root{--bg:#0b1020;--card:#111831;--text:#eef2ff;--muted:#b7c0df;--accent:#7c9cff;--danger:#ff8080}
+    *{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#0b1020,#0d1430);color:var(--text);font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif}
+    .wrap{max-width:720px;margin:0 auto;padding:18px}
+    .card{background:var(--card);border:1px solid #29345f;border-radius:14px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+    h1{font-size:1.3rem;margin:0 0 6px} p{color:var(--muted);line-height:1.6}
+    .hidden{display:none}
+    .choices{display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px}
+    .choice{padding:12px;border:1px solid #3a4a84;border-radius:10px;background:#131c3c;color:var(--text);text-align:left;cursor:pointer}
+    .choice:hover{border-color:var(--accent)}
+    .row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:.95rem;color:var(--muted)}
+    .bar{height:8px;background:#25315e;border-radius:999px;overflow:hidden}.fill{height:100%;background:var(--accent);width:0;transition:.2s}
+    input{width:100%;padding:11px;border-radius:8px;border:1px solid #3a4a84;background:#0f1733;color:var(--text)}
+    label{display:block;margin:12px 0 6px}
+    .agree{display:flex;align-items:flex-start;gap:8px;margin-top:12px;color:var(--text)}
+    .agree input{width:auto;margin-top:3px}
+    .error{color:var(--danger);margin-top:10px}
+    .btn{width:100%;margin-top:16px;background:var(--accent);color:white;border:none;padding:12px;border-radius:10px;font-weight:700;cursor:pointer}
+    .fine{font-size:.86rem}
+    a{color:#aac0ff}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card" id="quizView">
+    <h1>あなたに向いているAIエージェント診断</h1>
+    <p>Kindle本『AI開発はAIにやらせなさい』読者特典。8問であなたに合うAIエージェントを診断します。</p>
+    <div class="row"><span id="qCount">1 / 8</span><span>流入元: Kindle読者特典</span></div>
+    <div class="bar"><div class="fill" id="progress"></div></div>
+    <h2 id="question" style="font-size:1.05rem;margin-top:16px"></h2>
+    <div class="choices" id="choices"></div>
+  </div>
+
+  <div class="card hidden" id="leadView">
+    <h1>診断結果をメールで受け取る</h1>
+    <p>結果は画面では表示されません。メールでお届けします。</p>
+    <label>お名前</label><input id="name" type="text" placeholder="山田 花子" />
+    <label>メールアドレス</label><input id="email" type="email" placeholder="you@example.com" />
+    <div class="agree">
+      <input type="checkbox" id="agree" />
+      <label for="agree" style="margin:0">診断結果と今後のご案内をメールで受け取ることに同意します</label>
+    </div>
+    <p class="fine"><a href="https://example.com/privacy" target="_blank" rel="noopener">プライバシーポリシー</a></p>
+    <button class="btn" id="submitBtn">メールで受け取る</button>
+    <div class="error" id="leadError"></div>
+  </div>
+
+  <div class="card hidden" id="doneView">
+    <h1>送信が完了しました</h1>
+    <p>診断結果をメールで送信しました。迷惑メールフォルダもご確認ください。</p>
+  </div>
+</div>
+<script>
+const QUESTIONS=[
+{q:'新しい開発を始めるとき、まず何をしたいですか？',a:[['会話で要件整理したい','chatgpt'],['IDE内で爆速で書きたい','cursor'],['流れるように実装を進めたい','windsurf'],['丁寧なレビューと設計相談がほしい','claude'],['長い作業を自動で任せたい','devin']]},
+{q:'あなたの作業スタイルは？',a:[['まず考える→小さく試す','chatgpt'],['コードを触りながら調整','cursor'],['提案を受けてすぐ採用','windsurf'],['深く考えて品質重視','claude'],['まとめて依頼して待つ','devin']]},
+{q:'困ったときにほしい支援は？',a:[['壁打ちと発想','chatgpt'],['補完と編集の速さ','cursor'],['文脈を読んだ提案','windsurf'],['読みやすい説明','claude'],['自動実行と検証','devin']]},
+{q:'最重要なのは？',a:[['汎用性','chatgpt'],['実装速度','cursor'],['体験のなめらかさ','windsurf'],['正確さ','claude'],['自動化範囲','devin']]},
+{q:'コードレビューで重視するのは？',a:[['複数案の比較','chatgpt'],['差分をすぐ直す','cursor'],['流れを壊さない改善','windsurf'],['根拠ある指摘','claude'],['CIまで一気通貫','devin']]},
+{q:'学習スタイルは？',a:[['対話で理解','chatgpt'],['手を動かし習得','cursor'],['提案から逆算','windsurf'],['文章でじっくり','claude'],['実務を任せて学ぶ','devin']]},
+{q:'プロジェクトの規模感は？',a:[['個人開発から幅広く','chatgpt'],['中小規模の実装中心','cursor'],['日々の改善を高速に','windsurf'],['高品質が必要な機能','claude'],['中長期の大型開発','devin']]},
+{q:'理想のAIとの関係は？',a:[['相談相手','chatgpt'],['相棒エディタ','cursor'],['先回りアシスト','windsurf'],['熟練レビュアー','claude'],['実行担当エージェント','devin']]},
+];
+const TYPES={chatgpt:'ChatGPT/Codexタイプ',cursor:'Cursorタイプ',windsurf:'Windsurfタイプ',claude:'Claude Codeタイプ',devin:'Devin/OpenHandsタイプ'};
+let idx=0; const answers=[]; const scores={chatgpt:0,cursor:0,windsurf:0,claude:0,devin:0};
+function render(){const item=QUESTIONS[idx];document.getElementById('qCount').textContent=`${idx+1} / ${QUESTIONS.length}`;document.getElementById('progress').style.width=`${((idx+1)/QUESTIONS.length)*100}%`;document.getElementById('question').textContent=item.q;const box=document.getElementById('choices');box.innerHTML='';item.a.forEach(([txt,key])=>{const b=document.createElement('button');b.className='choice';b.textContent=txt;b.onclick=()=>pick(txt,key);box.appendChild(b);});}
+function pick(text,key){answers.push({question:QUESTIONS[idx].q,answer:text,key});scores[key]++;idx++;if(idx<QUESTIONS.length){render();return;}document.getElementById('quizView').classList.add('hidden');document.getElementById('leadView').classList.remove('hidden');}
+function resultKey(){return Object.entries(scores).sort((a,b)=>b[1]-a[1])[0][0];}
+async function submit(){const name=document.getElementById('name').value.trim();const email=document.getElementById('email').value.trim();const agree=document.getElementById('agree').checked;const err=document.getElementById('leadError');err.textContent='';if(!name||!email){err.textContent='名前とメールアドレスを入力してください。';return;}if(!agree){err.textContent='同意チェックが必要です。';return;}const payload={name,email,consent:agree,resultType:TYPES[resultKey()],answers,inflow:'Kindle読者特典'};const res=await fetch('/api/diagnosis-submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(!res.ok){err.textContent='送信に失敗しました。時間をおいて再度お試しください。';return;}document.getElementById('leadView').classList.add('hidden');document.getElementById('doneView').classList.remove('hidden');}
+render(); document.getElementById('submitBtn').addEventListener('click',submit);
+</script>
+</body>
+</html>
