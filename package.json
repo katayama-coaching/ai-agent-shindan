@@ -1,0 +1,9 @@
+{
+  "name": "ai-agent-shindan",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "resend": "^4.1.0",
+    "googleapis": "^140.0.1"
+  }
+}
