@@ -5,24 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>あなたに向いているAIエージェント診断</title>
   <style>
-    :root{--bg:#0b1020;--card:#111831;--text:#eef2ff;--muted:#b7c0df;--accent:#7c9cff;--accent2:#ffd166;--danger:#ff8080}
+    :root{--bg:#070b18;--card:#111831;--text:#eef2ff;--muted:#b7c0df;--accent:#8fa8ff;--accent2:#ffd166;--danger:#ff8080;--line:#2d3868}
     *{box-sizing:border-box}
-    body{margin:0;background:radial-gradient(circle at top,#20306a 0,#0b1020 42%,#080c1a 100%);color:var(--text);font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif}
+    body{margin:0;min-height:100vh;background:radial-gradient(circle at 20% 0%,rgba(143,168,255,.32),transparent 34%),radial-gradient(circle at 85% 10%,rgba(255,209,102,.18),transparent 28%),linear-gradient(180deg,#080d1e 0%,#0b1020 48%,#060914 100%);color:var(--text);font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif}
     .wrap{max-width:760px;margin:0 auto;padding:18px}
-    .card{background:rgba(17,24,49,.94);border:1px solid #29345f;border-radius:18px;padding:20px;box-shadow:0 18px 50px rgba(0,0,0,.32)}
+    .card{background:rgba(17,24,49,.92);border:1px solid rgba(143,168,255,.22);border-radius:24px;padding:22px;box-shadow:0 24px 70px rgba(0,0,0,.36);backdrop-filter:blur(10px)}
     h1{font-size:1.38rem;margin:0 0 8px;line-height:1.45}
     h2{font-size:1.08rem;margin-top:16px;line-height:1.5}
     p{color:var(--muted);line-height:1.7}
     .hidden{display:none}
-    .badge{display:inline-block;background:rgba(255,209,102,.14);color:#ffe39a;border:1px solid rgba(255,209,102,.45);padding:6px 10px;border-radius:999px;font-size:.82rem;font-weight:700;margin-bottom:12px}
-    .heroTitle{font-size:1.75rem;letter-spacing:.01em;margin-bottom:10px}
-    .heroTitle span{color:var(--accent2)}
-    .lead{font-size:1rem;color:#dce4ff}
+    .badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,209,102,.13);color:#ffe6a6;border:1px solid rgba(255,209,102,.38);padding:7px 11px;border-radius:999px;font-size:.82rem;font-weight:800;margin-bottom:14px;letter-spacing:.02em}
+    .brand{color:#dbe4ff;font-size:.88rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px;opacity:.9}
+    .heroTitle{font-size:2.05rem;letter-spacing:.01em;margin-bottom:12px;line-height:1.22}
+    .heroTitle span{background:linear-gradient(135deg,#fff,#ffd166);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .lead{font-size:1.02rem;color:#dce4ff;margin-bottom:14px}
+    .softQuestion{margin:14px 0;padding:14px;border-left:3px solid rgba(255,209,102,.7);background:rgba(15,23,51,.62);border-radius:12px;color:#f2f5ff;line-height:1.75}
     .points{display:grid;grid-template-columns:1fr;gap:10px;margin:16px 0}
-    .point{background:#0f1733;border:1px solid #33417a;border-radius:13px;padding:12px;color:#e7ecff;line-height:1.55}
+    .point{background:rgba(15,23,51,.72);border:1px solid rgba(143,168,255,.24);border-radius:16px;padding:13px;color:#e7ecff;line-height:1.58}
     .point strong{color:#fff}
-    .innerBox{margin-top:16px;padding:14px;border-radius:14px;background:linear-gradient(135deg,rgba(124,156,255,.18),rgba(255,209,102,.10));border:1px solid #465795}
-    .innerBox strong{display:block;color:#fff;margin-bottom:5px}
+    .point small{display:block;margin-top:4px;color:#bfc8e8;line-height:1.55}
+    .innerBox{margin-top:16px;padding:16px;border-radius:18px;background:linear-gradient(135deg,rgba(143,168,255,.20),rgba(255,209,102,.10));border:1px solid rgba(255,255,255,.16)}
+    .innerBox strong{display:block;color:#fff;margin-bottom:5px;font-size:1.02rem}
+    .fortune{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+    .fortune span{display:block;text-align:center;background:rgba(7,11,24,.42);border:1px solid rgba(255,255,255,.13);border-radius:999px;padding:8px;color:#f6f0d8;font-size:.9rem}
     .choices{display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px}
     .choice{padding:13px;border:1px solid #3a4a84;border-radius:12px;background:#131c3c;color:var(--text);text-align:left;cursor:pointer;font-size:1rem;line-height:1.45}
     .choice:hover{border-color:var(--accent);background:#182553}
@@ -33,32 +38,39 @@
     .agree{display:flex;align-items:flex-start;gap:8px;margin-top:12px;color:var(--text)}
     .agree input{width:auto;margin-top:3px}
     .error{color:var(--danger);margin-top:10px}
-    .btn{width:100%;margin-top:16px;background:linear-gradient(135deg,#7c9cff,#5d7cf5);color:white;border:none;padding:13px;border-radius:12px;font-weight:800;cursor:pointer;font-size:1rem}
+    .btn{width:100%;margin-top:16px;background:linear-gradient(135deg,#91aaff,#6f86ff);color:white;border:none;padding:14px;border-radius:14px;font-weight:900;cursor:pointer;font-size:1rem;box-shadow:0 12px 28px rgba(111,134,255,.24)}
     .linkBtn{display:block;text-align:center;text-decoration:none}
     .subBtn{display:block;width:100%;margin-top:10px;background:#18234a;color:#dbe5ff;border:1px solid #3a4a84;padding:12px;border-radius:10px;font-weight:700;text-align:center;text-decoration:none}
     .nextBox{margin-top:18px;padding:14px;border:1px solid #3a4a84;border-radius:12px;background:#0f1733}
     .nextBox strong{display:block;margin-bottom:6px;color:#fff}
-    .fine{font-size:.86rem}
+    .fine{font-size:.86rem;color:#aeb9dc}
     a{color:#aac0ff}
   </style>
 </head>
 <body>
 <div class="wrap">
   <div class="card" id="introView">
-    <div class="badge">Kindle読者限定特典</div>
-    <h1 class="heroTitle">あなたに合う<br><span>AIの使い方</span>がわかる診断</h1>
-    <p class="lead">AI開発は、難しいコードから始めなくても大丈夫です。まずは、あなたに合うAIとの付き合い方を見つけましょう。</p>
+    <div class="badge">✦ Kindle読者限定 特別診断</div>
+    <div class="brand">INNER COMPASS</div>
+    <h1 class="heroTitle">あなた専用の<br><span>AIコンパス</span>を見つける</h1>
+    <p class="lead">AIが気になる。でも、何から始めればいいかわからない。そんな方のための、やさしいAIタイプ診断です。</p>
+    <div class="softQuestion">
+      「AIを使ってみたい」<br>
+      「でも、自分に合う使い方がわからない」<br>
+      その迷いを、8つの質問で整理していきます。
+    </div>
     <div class="points">
-      <div class="point"><strong>8つの質問に答えるだけ</strong><br>あなたに向いているAIエージェントのタイプがわかります。</div>
-      <div class="point"><strong>初心者でも安心</strong><br>専門用語ではなく、普段の考え方や進め方から診断します。</div>
-      <div class="point"><strong>本の復習ポイントも届く</strong><br>診断結果に合わせて、読み返すと理解が深まる章をお届けします。</div>
+      <div class="point"><strong>🤖 あなたに合うAIタイプ診断</strong><small>ChatGPT、Codex、AIエージェントとの付き合い方が見えてきます。</small></div>
+      <div class="point"><strong>📖 Kindle本の復習ポイント</strong><small>診断結果に合わせて、今読み返すと理解が深まる章をお届けします。</small></div>
+      <div class="point"><strong>✨ INNER COMPASSへつながる入口</strong><small>AIコーチングで、悩み・目標・次の一歩をやさしく整理できます。</small></div>
     </div>
     <div class="innerBox">
-      <strong>INNER COMPASSについて</strong>
-      <p>診断後は、AIコーチング「INNER COMPASS」で、今の悩み・目標・次の一歩をAIと一緒に整理できます。</p>
+      <strong>毎日開きたくなる、INNER COMPASS</strong>
+      <p>無料で「毎日の星座占い」もチェックできます。今日の流れを見ながら、AIコーチングで自分の気持ちも整えられます。</p>
+      <div class="fortune"><span>総合運</span><span>恋愛運</span><span>仕事運</span><span>金運</span></div>
     </div>
-    <button class="btn" id="startBtn">無料診断をはじめる</button>
-    <p class="fine">所要時間は約1分です。診断結果はメールでお届けします。</p>
+    <button class="btn" id="startBtn">無料診断をスタートする</button>
+    <p class="fine">約1分で完了します。診断結果はメールでお届けします。</p>
   </div>
 
   <div class="card hidden" id="quizView">
@@ -89,7 +101,7 @@
     <p>診断結果をメールで送信しました。迷惑メールフォルダもご確認ください。</p>
     <div class="nextBox">
       <strong>次におすすめ</strong>
-      <p>診断結果を見たあとに、AIコーチング「INNER COMPASS」で今の悩みや目標を整理できます。</p>
+      <p>診断結果を見たあとに、AIコーチング「INNER COMPASS」で今の悩みや目標を整理できます。毎日の星座占いも無料でチェックできます。</p>
       <a class="btn linkBtn" href="https://coacing-app.vercel.app/" target="_blank" rel="noopener">INNER COMPASSを試す</a>
       <a class="subBtn" href="https://ai-agent-shindan.vercel.app/" rel="noopener">もう一度診断する</a>
       <p class="fine">LINE特典導線は、公式LINEのURLが決まり次第ここに追加できます。</p>
