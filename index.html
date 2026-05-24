@@ -5,23 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>あなたに向いているAIエージェント診断</title>
   <style>
-    :root{--bg:#0b1020;--card:#111831;--text:#eef2ff;--muted:#b7c0df;--accent:#7c9cff;--danger:#ff8080}
-    *{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#0b1020,#0d1430);color:var(--text);font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif}
-    .wrap{max-width:720px;margin:0 auto;padding:18px}
-    .card{background:var(--card);border:1px solid #29345f;border-radius:14px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
-    h1{font-size:1.3rem;margin:0 0 6px} p{color:var(--muted);line-height:1.6}
+    :root{--bg:#0b1020;--card:#111831;--text:#eef2ff;--muted:#b7c0df;--accent:#7c9cff;--accent2:#ffd166;--danger:#ff8080}
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(circle at top,#20306a 0,#0b1020 42%,#080c1a 100%);color:var(--text);font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif}
+    .wrap{max-width:760px;margin:0 auto;padding:18px}
+    .card{background:rgba(17,24,49,.94);border:1px solid #29345f;border-radius:18px;padding:20px;box-shadow:0 18px 50px rgba(0,0,0,.32)}
+    h1{font-size:1.38rem;margin:0 0 8px;line-height:1.45}
+    h2{font-size:1.08rem;margin-top:16px;line-height:1.5}
+    p{color:var(--muted);line-height:1.7}
     .hidden{display:none}
+    .badge{display:inline-block;background:rgba(255,209,102,.14);color:#ffe39a;border:1px solid rgba(255,209,102,.45);padding:6px 10px;border-radius:999px;font-size:.82rem;font-weight:700;margin-bottom:12px}
+    .heroTitle{font-size:1.75rem;letter-spacing:.01em;margin-bottom:10px}
+    .heroTitle span{color:var(--accent2)}
+    .lead{font-size:1rem;color:#dce4ff}
+    .points{display:grid;grid-template-columns:1fr;gap:10px;margin:16px 0}
+    .point{background:#0f1733;border:1px solid #33417a;border-radius:13px;padding:12px;color:#e7ecff;line-height:1.55}
+    .point strong{color:#fff}
+    .innerBox{margin-top:16px;padding:14px;border-radius:14px;background:linear-gradient(135deg,rgba(124,156,255,.18),rgba(255,209,102,.10));border:1px solid #465795}
+    .innerBox strong{display:block;color:#fff;margin-bottom:5px}
     .choices{display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px}
-    .choice{padding:12px;border:1px solid #3a4a84;border-radius:10px;background:#131c3c;color:var(--text);text-align:left;cursor:pointer}
-    .choice:hover{border-color:var(--accent)}
-    .row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:.95rem;color:var(--muted)}
+    .choice{padding:13px;border:1px solid #3a4a84;border-radius:12px;background:#131c3c;color:var(--text);text-align:left;cursor:pointer;font-size:1rem;line-height:1.45}
+    .choice:hover{border-color:var(--accent);background:#182553}
+    .row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:.92rem;color:var(--muted);gap:10px}
     .bar{height:8px;background:#25315e;border-radius:999px;overflow:hidden}.fill{height:100%;background:var(--accent);width:0;transition:.2s}
     input{width:100%;padding:11px;border-radius:8px;border:1px solid #3a4a84;background:#0f1733;color:var(--text)}
     label{display:block;margin:12px 0 6px}
     .agree{display:flex;align-items:flex-start;gap:8px;margin-top:12px;color:var(--text)}
     .agree input{width:auto;margin-top:3px}
     .error{color:var(--danger);margin-top:10px}
-    .btn{width:100%;margin-top:16px;background:var(--accent);color:white;border:none;padding:12px;border-radius:10px;font-weight:700;cursor:pointer}
+    .btn{width:100%;margin-top:16px;background:linear-gradient(135deg,#7c9cff,#5d7cf5);color:white;border:none;padding:13px;border-radius:12px;font-weight:800;cursor:pointer;font-size:1rem}
     .linkBtn{display:block;text-align:center;text-decoration:none}
     .subBtn{display:block;width:100%;margin-top:10px;background:#18234a;color:#dbe5ff;border:1px solid #3a4a84;padding:12px;border-radius:10px;font-weight:700;text-align:center;text-decoration:none}
     .nextBox{margin-top:18px;padding:14px;border:1px solid #3a4a84;border-radius:12px;background:#0f1733}
@@ -32,18 +44,35 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="card" id="quizView">
+  <div class="card" id="introView">
+    <div class="badge">Kindle読者限定特典</div>
+    <h1 class="heroTitle">あなたに合う<br><span>AIの使い方</span>がわかる診断</h1>
+    <p class="lead">AI開発は、難しいコードから始めなくても大丈夫です。まずは、あなたに合うAIとの付き合い方を見つけましょう。</p>
+    <div class="points">
+      <div class="point"><strong>8つの質問に答えるだけ</strong><br>あなたに向いているAIエージェントのタイプがわかります。</div>
+      <div class="point"><strong>初心者でも安心</strong><br>専門用語ではなく、普段の考え方や進め方から診断します。</div>
+      <div class="point"><strong>本の復習ポイントも届く</strong><br>診断結果に合わせて、読み返すと理解が深まる章をお届けします。</div>
+    </div>
+    <div class="innerBox">
+      <strong>INNER COMPASSについて</strong>
+      <p>診断後は、AIコーチング「INNER COMPASS」で、今の悩み・目標・次の一歩をAIと一緒に整理できます。</p>
+    </div>
+    <button class="btn" id="startBtn">無料診断をはじめる</button>
+    <p class="fine">所要時間は約1分です。診断結果はメールでお届けします。</p>
+  </div>
+
+  <div class="card hidden" id="quizView">
     <h1>あなたに向いているAIエージェント診断</h1>
-    <p>Kindle本『AI開発はAIにやらせなさい』読者特典。8問であなたに合うAIエージェントを診断します。</p>
-    <div class="row"><span id="qCount">1 / 8</span><span>流入元: Kindle読者特典</span></div>
+    <p>むずかしく考えなくて大丈夫です。今のあなたに近いものを選んでください。</p>
+    <div class="row"><span id="qCount">1 / 8</span><span>Kindle読者特典</span></div>
     <div class="bar"><div class="fill" id="progress"></div></div>
-    <h2 id="question" style="font-size:1.05rem;margin-top:16px"></h2>
+    <h2 id="question"></h2>
     <div class="choices" id="choices"></div>
   </div>
 
   <div class="card hidden" id="leadView">
     <h1>診断結果をメールで受け取る</h1>
-    <p>結果は画面では表示されません。メールでお届けします。</p>
+    <p>あなたに合うAIタイプ、本の復習ポイント、最初の一歩をメールでお届けします。</p>
     <label>お名前</label><input id="name" type="text" placeholder="山田 花子" />
     <label>メールアドレス</label><input id="email" type="email" placeholder="you@example.com" />
     <div class="agree">
@@ -51,7 +80,7 @@
       <label for="agree" style="margin:0">診断結果と今後のご案内をメールで受け取ることに同意します</label>
     </div>
     <p class="fine"><a href="https://example.com/privacy" target="_blank" rel="noopener">プライバシーポリシー</a></p>
-    <button class="btn" id="submitBtn">メールで受け取る</button>
+    <button class="btn" id="submitBtn">診断結果を受け取る</button>
     <div class="error" id="leadError"></div>
   </div>
 
@@ -60,8 +89,8 @@
     <p>診断結果をメールで送信しました。迷惑メールフォルダもご確認ください。</p>
     <div class="nextBox">
       <strong>次におすすめ</strong>
-      <p>診断結果を見たあとに、AIコーチングで今の悩みや目標を整理できます。</p>
-      <a class="btn linkBtn" href="https://coacing-app.vercel.app/" target="_blank" rel="noopener">AIコーチングを試す</a>
+      <p>診断結果を見たあとに、AIコーチング「INNER COMPASS」で今の悩みや目標を整理できます。</p>
+      <a class="btn linkBtn" href="https://coacing-app.vercel.app/" target="_blank" rel="noopener">INNER COMPASSを試す</a>
       <a class="subBtn" href="https://ai-agent-shindan.vercel.app/" rel="noopener">もう一度診断する</a>
       <p class="fine">LINE特典導線は、公式LINEのURLが決まり次第ここに追加できます。</p>
     </div>
@@ -69,14 +98,14 @@
 </div>
 <script>
 const QUESTIONS=[
-{q:'新しい開発を始めるとき、まず何をしたいですか？',a:[['会話で要件整理したい','chatgpt'],['IDE内で爆速で書きたい','cursor'],['流れるように実装を進めたい','windsurf'],['丁寧なレビューと設計相談がほしい','claude'],['長い作業を自動で任せたい','devin']]},
-{q:'あなたの作業スタイルは？',a:[['まず考える→小さく試す','chatgpt'],['コードを触りながら調整','cursor'],['提案を受けてすぐ採用','windsurf'],['深く考えて品質重視','claude'],['まとめて依頼して待つ','devin']]},
-{q:'困ったときにほしい支援は？',a:[['壁打ちと発想','chatgpt'],['補完と編集の速さ','cursor'],['文脈を読んだ提案','windsurf'],['読みやすい説明','claude'],['自動実行と検証','devin']]},
-{q:'最重要なのは？',a:[['汎用性','chatgpt'],['実装速度','cursor'],['体験のなめらかさ','windsurf'],['正確さ','claude'],['自動化範囲','devin']]},
-{q:'コードレビューで重視するのは？',a:[['複数案の比較','chatgpt'],['差分をすぐ直す','cursor'],['流れを壊さない改善','windsurf'],['根拠ある指摘','claude'],['CIまで一気通貫','devin']]},
-{q:'学習スタイルは？',a:[['対話で理解','chatgpt'],['手を動かし習得','cursor'],['提案から逆算','windsurf'],['文章でじっくり','claude'],['実務を任せて学ぶ','devin']]},
-{q:'プロジェクトの規模感は？',a:[['個人開発から幅広く','chatgpt'],['中小規模の実装中心','cursor'],['日々の改善を高速に','windsurf'],['高品質が必要な機能','claude'],['中長期の大型開発','devin']]},
-{q:'理想のAIとの関係は？',a:[['相談相手','chatgpt'],['相棒エディタ','cursor'],['先回りアシスト','windsurf'],['熟練レビュアー','claude'],['実行担当エージェント','devin']]},
+{q:'新しいことを始めるとき、最初はどうしたいですか？',a:[['AIと話しながら考えたい','chatgpt'],['実際に触りながら進めたい','cursor'],['AIから提案してほしい','windsurf'],['じっくり説明してほしい','claude'],['AIにある程度お任せしたい','devin']]},
+{q:'何かを覚えるとき、あなたはどのタイプですか？',a:[['会話しながら理解したい','chatgpt'],['実際にやって覚えたい','cursor'],['おすすめを試したい','windsurf'],['ちゃんと理解してから進みたい','claude'],['とりあえず任せて見てみたい','devin']]},
+{q:'困った時、AIに何をしてほしいですか？',a:[['相談に乗ってほしい','chatgpt'],['作業を手伝ってほしい','cursor'],['良い方法を提案してほしい','windsurf'],['分かりやすく教えてほしい','claude'],['まとめてやってほしい','devin']]},
+{q:'あなたが一番大事にするのは？',a:[['色々なことに使えること','chatgpt'],['作業を早くすること','cursor'],['楽に進められること','windsurf'],['ミスを減らすこと','claude'],['自動で進むこと','devin']]},
+{q:'AIに手伝ってもらうなら、どんな形が理想ですか？',a:[['アイデアを出してほしい','chatgpt'],['一緒に作業してほしい','cursor'],['先回りして助けてほしい','windsurf'],['間違いを見つけてほしい','claude'],['最後までやってほしい','devin']]},
+{q:'AIとの理想の関係は？',a:[['相談相手','chatgpt'],['一緒に動く相棒','cursor'],['気が利くアシスタント','windsurf'],['頼れる先生','claude'],['働いてくれるスタッフ','devin']]},
+{q:'これからAIでやってみたいのは？',a:[['色々試してみたい','chatgpt'],['アプリやブログを作りたい','cursor'],['毎日の作業を楽にしたい','windsurf'],['ちゃんとした物を作りたい','claude'],['AIに仕事を任せたい','devin']]},
+{q:'あなたが目指したい未来に近いのは？',a:[['AIと一緒に考える','chatgpt'],['AIと一緒に作る','cursor'],['AIが先回りして助ける','windsurf'],['AIがアドバイスしてくれる','claude'],['AIチームが働いている','devin']]},
 ];
 const TYPES={chatgpt:'ChatGPT/Codexタイプ',cursor:'Cursorタイプ',windsurf:'Windsurfタイプ',claude:'Claude Codeタイプ',devin:'Devin/OpenHandsタイプ'};
 let idx=0; const answers=[]; const scores={chatgpt:0,cursor:0,windsurf:0,claude:0,devin:0};
@@ -88,7 +117,8 @@ async function submit(){const name=document.getElementById('name').value.trim();
   err.textContent = '送信に失敗しました：' + (data.detail || data.error || res.status);
   return;
 }document.getElementById('leadView').classList.add('hidden');document.getElementById('doneView').classList.remove('hidden');}
-render(); document.getElementById('submitBtn').addEventListener('click',submit);
+document.getElementById('startBtn').addEventListener('click',()=>{document.getElementById('introView').classList.add('hidden');document.getElementById('quizView').classList.remove('hidden');render();});
+document.getElementById('submitBtn').addEventListener('click',submit);
 </script>
 </body>
 </html>
