@@ -5,67 +5,87 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>プライバシーポリシー</title>
 <style>
-body{
-font-family:-apple-system,Meiryo,sans-serif;
-max-width:900px;
-margin:auto;
-padding:30px;
-line-height:1.9;
-background:#fafafa;
-}
-.container{
-background:white;
-padding:30px;
-border-radius:15px;
-box-shadow:0 5px 20px rgba(0,0,0,.08);
-}
+:root{--bg:#070b18;--card:#111831;--text:#eef2ff;--muted:#b7c0df;--accent:#8fa8ff;--gold:#ffd166;--line:#2d3868}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at 20% 0%,rgba(143,168,255,.32),transparent 34%),radial-gradient(circle at 85% 10%,rgba(255,209,102,.18),transparent 28%),linear-gradient(180deg,#080d1e 0%,#0b1020 48%,#060914 100%);color:var(--text);font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif;line-height:1.85}
+.wrap{max-width:1000px;margin:0 auto;padding:22px}
+.hero{background:rgba(17,24,49,.92);border:1px solid rgba(143,168,255,.22);border-radius:28px;padding:34px 24px;text-align:center;box-shadow:0 24px 70px rgba(0,0,0,.36);margin-bottom:22px}
+.compass{font-size:42px;color:var(--gold);margin-bottom:8px}.eyebrow{font-family:serif;color:#e4bf78;font-style:italic;font-size:1.15rem}.hero h1{font-size:2.05rem;margin:8px 0 12px;letter-spacing:.04em}.hero h1 span{background:linear-gradient(135deg,#fff,#ffd166);-webkit-background-clip:text;background-clip:text;color:transparent}.lead{color:#dce4ff;font-size:1.05rem}.container{background:rgba(255,255,255,.96);color:#172033;padding:28px;border-radius:24px;box-shadow:0 15px 45px rgba(0,0,0,.18)}
+h2{color:#24346b;margin-top:28px;border-bottom:1px solid #e8defb;padding-bottom:8px}ul{padding-left:1.3em}.card{background:#fbfaff;border:1px solid #eee7ff;border-radius:16px;padding:18px;margin:14px 0}.contact{background:#fff6ed;border-color:#f4d5ba}.footer{text-align:center;color:#aeb9dc;margin:20px 0}.back{display:inline-block;margin-top:16px;color:#fff;background:linear-gradient(135deg,#91aaff,#6f86ff);padding:12px 18px;border-radius:14px;text-decoration:none;font-weight:800}
 </style>
 </head>
 <body>
+<div class="wrap">
+  <section class="hero">
+    <div class="compass">✦</div>
+    <div class="eyebrow">Privacy Policy</div>
+    <h1><span>プライバシーポリシー</span></h1>
+    <p class="lead">あなたの情報を、大切に扱います。</p>
+    <p>クリエートプラス（以下「当方」）は、AIエージェント診断・INNER COMPASS関連サービスにおける個人情報の取扱いについて、以下の通り定めます。</p>
+  </section>
 
-<div style="max-width:1000px;margin:auto;padding:20px;">
+  <main class="container">
+    <div class="card">
+      <h2>01. 取得する情報</h2>
+      <p>当方は、サービス提供のために以下の情報を取得する場合があります。</p>
+      <ul>
+        <li>お名前</li>
+        <li>メールアドレス</li>
+        <li>診断の回答内容</li>
+        <li>診断結果</li>
+        <li>流入元情報</li>
+      </ul>
+    </div>
 
-<img
-src="/privacy-header.png"
-style="
-width:100%;
-border-radius:28px;
-box-shadow:0 15px 45px rgba(0,0,0,.15);
-margin-bottom:25px;
-">
+    <div class="card">
+      <h2>02. 利用目的</h2>
+      <ul>
+        <li>診断結果の送信</li>
+        <li>サービス改善</li>
+        <li>お問い合わせ対応</li>
+        <li>INNER COMPASS関連サービスのご案内</li>
+      </ul>
+    </div>
 
-<div class="container">
+    <div class="card">
+      <h2>03. 第三者提供について</h2>
+      <p>法令に基づく場合を除き、本人の同意なく個人情報を第三者に提供することはありません。</p>
+    </div>
 
-<h1>プライバシーポリシー</h1>
+    <div class="card">
+      <h2>04. 外部サービスの利用</h2>
+      <p>当サービスでは、Google Sheets、Resend、Vercel等の外部サービスを利用する場合があります。</p>
+    </div>
 
-<p>クリエートプラス（以下「当方」）は、
-AIエージェント診断・INNER COMPASS関連サービスにおける
-個人情報の取扱いについて以下の通り定めます。
-</p>
+    <div class="card">
+      <h2>05. Cookieについて</h2>
+      <p>利便性向上やアクセス解析のためにCookieを利用する場合があります。ブラウザ設定により無効化できます。</p>
+    </div>
 
-<h2>取得する情報</h2>
-<ul>
-<li>氏名</li>
-<li>メールアドレス</li>
-<li>診断内容</li>
-<li>診断結果</li>
-<li>流入元情報</li>
-</ul>
+    <div class="card">
+      <h2>06. 情報の安全管理</h2>
+      <p>取得した個人情報は、漏えい・紛失・改ざん・不正アクセス等を防ぐため、適切に管理します。</p>
+    </div>
 
-<h2>利用目的</h2>
-<ul>
-<li>診断結果送信</li>
-<li>サービス改善</li>
-<li>お問い合わせ対応</li>
-<li>INNER COMPASS案内</li>
-</ul>
+    <div class="card">
+      <h2>07. 開示・訂正・削除について</h2>
+      <p>ご本人から個人情報の開示・訂正・削除等のご請求があった場合、適切な方法により対応します。</p>
+    </div>
 
-<h2>お問い合わせ</h2>
+    <div class="card contact">
+      <h2>08. お問い合わせ</h2>
+      <p>個人情報の取扱いに関するお問い合わせは、下記までご連絡ください。</p>
+      <p><strong>クリエートプラス</strong><br>メール：ookura6882@gmail.com</p>
+    </div>
 
-クリエートプラス<br>
-ookura6882@gmail.com
+    <div class="card">
+      <h2>09. プライバシーポリシーの改定について</h2>
+      <p>本ポリシーの内容は、必要に応じて変更することがあります。変更後の内容は、当サイト上で速やかに公表します。</p>
+    </div>
 
-</div>
+    <p class="footer">制定日：2026年5月25日</p>
+    <a class="back" href="/">診断ページへ戻る</a>
+  </main>
 </div>
 </body>
 </html>
